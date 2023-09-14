@@ -1,16 +1,11 @@
             ;; delay.s
             ;; 
             ;; delays
-            ;; 
-            ;; MIT License (see: LICENSE)
-            ;; copyright (c) 2023 tomaz stih
             ;;
             ;; 2023-09-13   tstih
             .module delay
 
             .globl  delay_1ms
-
-            .include "scn2674.inc"
 
             .area   _CODE
 

@@ -1,11 +1,9 @@
             ;; scn2674.s
             ;; 
-            ;; scn2674 chip consts. 
+            ;; scn2674  
             ;;
-            ;; MIT License (see: LICENSE)
-            ;; copyright (c) 2022 tomaz stih
-            ;;
-            ;; 05.05.2022    tstih
+            ;; 2022-05-05   tstih
+            .module scn2674
 
             ;; --- 0x34 - R/W:character register ----------------------------------
             .equ SCN2674_CHR,               0x34
@@ -82,3 +80,29 @@
             .equ SCN2674_SS2_LO,            0x3e
             ;; --- 0x3f - R/W: screen start 2 upper register ----------------------
             .equ SCN2674_SS2_HI,            0x3f
+
+
+            .area   _CODE
+            ;; --- driver routines ------------------------------------------------
+scn2674_probe::
+            ;; tech. doc. - master reset 
+            ;; must be called twice upon power up.
+            ;; no delay is required (should we have one?)
+            ld      a,#SCN2674_CMD_RESET
+            out     (#SCN2674_CMD),a
+            out     (#SCN2674_CMD),a
+            ;; set SS1 and SS2
+            out     (SCN2674_SS1_LO),a
+            out     (SCN2674_SS1_HI),a
+            out     (SCN2674_SS2_LO),a
+            out     (SCN2674_SS2_HI),a
+            ;; sent init sequence
+            ld      hl,#scn2674_init_seq
+            ld      c,#SCN2674_INIT
+            ld      b,#escn2674_init_seq-#scn2674_init_seq
+            otir
+            ret
+
+scn2674_init_seq:
+            .db     0x10, 0x20, 0x30
+escn2674_init_seq:
