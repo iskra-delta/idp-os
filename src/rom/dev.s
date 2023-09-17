@@ -6,7 +6,8 @@
             ;; 
             ;;  struct dev_s {
             ;;      uint8_t name[8]; /* if first byte is 0 ... not used */
-            ;;      uint8_t flags[2];
+            ;;      uint8_t reserved; /* for 0 terminated name string */
+            ;;      uint8_t flags;
             ;;      uint8_t data[8];
             ;;      struct dev_drv_s *driver;
             ;;  };
@@ -21,6 +22,7 @@
             ;;      close
             ;;      read
             ;;      write
+            ;;      ioctl
             ;;  };
             ;;  
             ;; all functions are async. each driver also has a probe 
@@ -35,3 +37,5 @@
             .module dev
 
             .area   _CODE
+dev_find::
+            ret

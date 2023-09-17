@@ -21,13 +21,14 @@
             .area   _CODE
 rst00::
             di                              ; disable interrupts
-            jp      start
-os_version: .db     'O', 'S', '1', '0'      ; use 4 free bytes for version
+            jp      _start
+version::
+            .db     'O', 'S', '1', '0'      ; use 4 free bytes for version
 
             ;; rst8 is system call
 rst08::
             reti            
-start:
+_start:
             ld      sp,#stack               ; initialize stack.
             call    ir_init                 ; initilize interrupt routines
 

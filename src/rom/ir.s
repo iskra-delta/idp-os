@@ -13,6 +13,7 @@
             ;; initialize interrupt routines
             ;; destroys:
             ;;  a  ... 0
+            ;;  flags
             ;; ----------------------------------------------------------------
 ir_init::
             xor     a
@@ -23,6 +24,9 @@ ir_init::
             ;; ir_disable();
             ;; ----------------------------------------------------------------
             ;; execute di instruction with reference counting
+            ;;
+            ;; destroys:
+            ;;  flags
             ;; ----------------------------------------------------------------
 ir_disable::
             di
@@ -37,20 +41,23 @@ ir_disable::
             ;; ir_enable();
             ;; ----------------------------------------------------------------
             ;; execute ei instruction with reference counting
+            ;;
+            ;; destroys:
+            ;;  flags
             ;; ----------------------------------------------------------------
 ir_enable::
             di                              ; make sure no one bothers our logic
             push    af                      ; store af
             ld		a,(#ir_refcnt)          ; get reference counter
             or		a                       ; set flags
-            jr		z,ir_enable_ei          ; if a==0 then just ei		
+            jr		z,ire_ei$               ; if a==0 then just ei		
             dec		a                       ; if a<>0 then dec a
             ld		(#ir_refcnt),a          ; write back to counter
             or		a                       ; and check for ei
-            jr		nz,ir_enable_done       ; not yet...
-ir_enable_ei:		
+            jr		nz,ire_done$            ; not yet...
+ire_ei$:		
             ei
-ir_enable_done:
+ire_done$:
             pop     af
             ret
 

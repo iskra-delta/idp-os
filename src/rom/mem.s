@@ -20,6 +20,7 @@
             ;;  hl  ... points to the last byte of the block
             ;;  de  ... hl + 1
             ;;  bc  ... 0
+            ;;  flags
             ;; ----------------------------------------------------------------
 mem_set::
             ld      d,h                 ; target for LDIR

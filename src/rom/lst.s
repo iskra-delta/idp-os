@@ -26,6 +26,7 @@
             ;;  bc  ... pointer to record to add
             ;; destroys: 
             ;;  bc  ... old first record pointer
+            ;;  flags
             ;; ----------------------------------------------------------------
 lst_insert::
             ;; move address of the first record to bc
