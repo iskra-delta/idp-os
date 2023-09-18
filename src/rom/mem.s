@@ -14,7 +14,7 @@
             ;; 
             ;; input(s):    
             ;;  hl  ... start address
-            ;;  bc  ... length
+            ;;  de  ... length
             ;;  a   ... value
             ;; destroys:
             ;;  hl  ... points to the last byte of the block
@@ -23,9 +23,14 @@
             ;;  flags
             ;; ----------------------------------------------------------------
 mem_set::
-            ld      d,h                 ; target for LDIR
+            ;; length to bc
+            ld      b,d
+            ld      c,e
+            ;; hl+1 to de
+            ld      d,h               
             ld      e,l
             inc     de
+            ;; initial value
             ld      (hl),a
             ldir
             ret

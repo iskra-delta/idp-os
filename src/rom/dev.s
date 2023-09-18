@@ -36,6 +36,20 @@
             ;; 2023-09-14   tstih
             .module dev
 
+
             .area   _CODE
+            ;; ----------------------------------------------------------------
+            ;; <hl> *dev <- dev_find(<hl> *name);
+            ;; ----------------------------------------------------------------
+            ;; this routine finds a device by name.
+            ;; 
+            ;; input(s):    
+            ;;  hl  ... pointer to zero terminated device name
+            ;; output(s):   
+            ;;  hl  ... points to the dev_s structure
+            ;;  f   ... z if found, nz if not found
+            ;; destroys:
+            ;;  a
+            ;; ----------------------------------------------------------------
 dev_find::
             ret

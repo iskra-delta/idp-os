@@ -23,7 +23,7 @@
             ;; 
             ;; input(s):    
             ;;  hl  ... pointer to memory location of the first record
-            ;;  bc  ... pointer to record to add
+            ;;  de  ... pointer to record to add
             ;; destroys: 
             ;;  bc  ... old first record pointer
             ;;  flags
