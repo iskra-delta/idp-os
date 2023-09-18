@@ -133,15 +133,32 @@ scn2674_probe::
             ;; initialize row table
 
 
-            ;; create the device entry
+            ;; create the device entry and fd
+            xor     a
+            ld      (#_scn2674_fd),a    ; not opened
 
             ;; display on
-
+            
             
             ret
 
 
+            ;; ----------------------------------------------------------------
+            ;; <hl> fd <- scn2674_open();
+            ;; ----------------------------------------------------------------
+            ;; this routine opens the device. if the device requires exclusive
+            ;; access it locks it for other usages.
+            ;; 
+            ;; output(s):   
+            ;;  hl  ... points to the device context, which is always the same
+            ;;  f   ... z if success, nz otherwise
+            ;; destroys:
+            ;;  a. bc
+            ;; ----------------------------------------------------------------
 _scn2674_open:
+            ld      a,#1
+            ld      (#_scn2674_fd),a    ; opened!
+            or      a                   ; reset zero flag (all is well)
             ret
 
 
@@ -410,3 +427,9 @@ _scn2674_init_seq:
             ;;  0000    smooth scroll is on for soft scroll
             .db     0b00000000
 _escn2674_init_seq:
+
+
+            .area   _OS_SYSINFO
+            ;; device fd (when opened!)
+_scn2674_fd::
+            .ds     1
