@@ -43,3 +43,23 @@ la_fail$:   cp      #0xff               ; this will reset Z flag
 lock_release::
             ld (hl),#0xfe
             ret
+
+
+            ;; ----------------------------------------------------------------
+            ;; lock_test(<hl> *lock)
+            ;; ----------------------------------------------------------------
+            ;; tests the lock by acquiring and releasing...
+            ;; 
+            ;; input(s):    
+            ;;  hl  ... pointer to memory location holding the lock
+            ;; output(s):
+            ;;  flags   Z if locked, NZ if not locked
+            ;; destroy:
+            ;;  a, flags
+            ;; ----------------------------------------------------------------
+lock_test::
+            call    lock_acquire
+            ret     nz                  ; it's locked...
+            call    lock_release        ; release
+            or      a
+            ret

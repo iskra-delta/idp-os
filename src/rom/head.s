@@ -47,6 +47,11 @@ _start:
 
             ;; and jump to it!
 
+
+
+_msg_welcome:
+            .asciz  "PartOS 1.0\n"
+
             ;; ram top free space
             .area   _OSRAM
             .area   _OSSTACK
