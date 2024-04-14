@@ -2,7 +2,9 @@
 AS = sdasz80
 AS_FLAGS = -l
 LD = sdldz80
-LD_FLAGS = -b _OSRAM=0xfc00 -iy
+LD_FLAGS =  -b _SYSVARS=0xf9bf \
+			-b _INTVEC=0xfdff \
+			-iy
 OBJCOPY = sdobjcopy
 OBJCOPY_FLAGS = -I ihex -O binary 
 COPY = cp

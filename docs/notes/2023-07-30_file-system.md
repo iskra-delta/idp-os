@@ -4,9 +4,9 @@
 
 2) Regarding the format of the floppy disk, hypothetically, FAT12 and FAT16 would work. ROM reads a sufficiently large boot sector that includes 512 bytes and jumps to its beginning. And FAT12/16 has, as its first command, a jump to the BOOT sector, followed by the BPB (BIOS Parameter Block). ROM would not detect BPB, but the boot sector could easily do it. This means that it can boot from any DOS diskette.
 
-3) The dilemma is whether to use FAT12 or FAT16. FAT12 allows up to 16MB hard disks. Xebec S1410, on the other hand, supports MFM disks, which can go up to 40MB. As an interesting fact: Xebec S1410 can control two disks and was typically used in a configuration of 1x floppy and 1x HDD, but only 5.25". Two floppy controllers are probably (again) a particularity of Partner.
+3) The dilemma is whether to use FAT12 or FAT16. FAT12 allows up to 16MB hard disks. Xebec S1410, on the other hand, supports MFM disks, which can go up to 40MB. 
 
-4) Regarding startup, the system can act automatically, i.e., first attempt to boot from floppy and then from HDD. And with FAT, there is no need to hard-code disk parameters because they are in the BPB (BIOS Parameter Block) on the disk or (are covered by) the MBR.
+4) Regarding startup, the system must configure the 8272 controller with disk parameters before first operation. And with FAT, it can read format details from the BPB (BIOS Parameter Block) on the disk.
 
 ~~~asm
     ;; 3 bytes for jump after the BPB
