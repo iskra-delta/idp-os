@@ -12,7 +12,7 @@ K := $(foreach exec,$(REQUIRED),\
 export ROOT = $(realpath .)
 export BUILD_DIR = $(ROOT)/build
 export BIN_DIR = $(ROOT)/bin
-SRC_DIR = $(ROOT)/src
+export SRC_DIR = $(ROOT)/src
 
 # Tools.
 MAKE = make
